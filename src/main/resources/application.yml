@@ -1,0 +1,40 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /api
+  port: 5788
+spring:
+  profiles:
+    active: dev
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: @datasource.url@
+    username: @datasource.username@
+    password: @datasource.password@
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+
+#MyBatis配置
+mybatis:
+  mapper-locations: classpath*:mapping/*/*.xml
+  type-aliases-package: com.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#Mapper通用插件
+mapper:
+  mappers: com.MyMapper
+  not-empty: false
+  identity: MYSQL
+
+#日志
+logging:
+  file: ./log/pay.log
+  level:
+    org.xxpay.service.dao.mapper: debug
+
