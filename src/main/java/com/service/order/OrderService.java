@@ -1,6 +1,5 @@
 package com.service.order;
 
-import com.entity.Merchant;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 

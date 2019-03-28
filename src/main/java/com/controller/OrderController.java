@@ -42,8 +42,12 @@ public class OrderController {
     }
 
     @ApiOperation(value="支付回调地址", notes="给上游方调用的回调地址")
-    @GetMapping(value="/notify/{channal}")
-    public String upStreamNotify() {
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType="path", dataType="long", name="orderID", value = "订单ID", required = true)
+    })
+    @GetMapping(value="/notify/{orderID}", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String upStreamNotify(@PathVariable long orderID) {
+        System.out.println(orderID);
         return "支付回调地址";
     }
 
