@@ -3,8 +3,8 @@ package com.service.order;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 
-@Service
-public class OrderService {
+@Service("orderService")
+class OrderService implements IOrder {
 
     /**
      * 支付接口

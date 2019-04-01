@@ -1,12 +1,13 @@
 package com.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.service.order.OrderService;
+import com.service.order.IOrder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 public class OrderController {
 
     @Autowired
-    private OrderService orderService;
+    @Qualifier("orderProxyService")
+    private IOrder orderProxyService;
 
     @ApiOperation(value="提交订单", notes="给下游方调用的订单接口")
     @ApiImplicitParams({
@@ -33,7 +35,7 @@ public class OrderController {
         String domainName = request.getServerName();    //域名
 
         try {
-            orderService.pay(domainName, clientIP, port, JSONObject.parseObject(params));
+            orderProxyService.pay(domainName, clientIP, port, JSONObject.parseObject(params));
         } catch (Exception e) {
             e.printStackTrace();
         }
