@@ -2,8 +2,8 @@ package com.utils;
 
 public class Result implements java.io.Serializable {
 
-    //状态码
-    private String code = "000000";
+    //状态
+    private boolean success = false;
 
     //提示信息
     private String message = "成功!";
@@ -13,27 +13,27 @@ public class Result implements java.io.Serializable {
 
     public Result() {}
 
-    public Result(String code) {
-        this.code = code;
+    public Result(boolean success) {
+        this.success = success;
     }
 
-    public Result(String code, String message) {
-        this.code = code;
+    public Result(boolean success, String message) {
+        this.success = success;
         this.message = message;
     }
 
-    public Result(String code, String message, Object data) {
-        this.code = code;
+    public Result(boolean success, String message, Object data) {
+        this.success = success;
         this.message = message;
         this.data = data;
     }
 
-    public String getCode() {
-        return code;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     public String getMessage() {

@@ -1,6 +1,7 @@
 package com.service.order;
 
 import com.alibaba.fastjson.JSONObject;
+import com.utils.Result;
 import org.springframework.stereotype.Service;
 
 @Service("orderService")
@@ -13,10 +14,11 @@ class OrderService implements IOrder {
      * @param port
      * @param params
      */
-    public void pay(String domainName, String clientIP, int port, JSONObject params) {
+    public Result pay(String domainName, String clientIP, int port, JSONObject params) {
 
         String mchId = params.getString("mchId");
         this.validateMerchant(mchId, clientIP, port);
+        return null;
     }
 
     private void validateMerchant(String merchantID, String clientIP, int port) {

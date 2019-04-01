@@ -1,6 +1,7 @@
 package com.service.order;
 
 import com.alibaba.fastjson.JSONObject;
+import com.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +19,13 @@ public class OrderProxyService implements IOrder {
      * @param port
      * @param params
      */
-    public void pay(String domainName, String clientIP, int port, JSONObject params) {
+    public Result pay(String domainName, String clientIP, int port, JSONObject params) {
 
-        boolean isvalue = whiteListIsExist(domainName, clientIP, port);
-        if (isvalue) {
-            orderService.pay(domainName, clientIP, port, params);
+        Result result = whiteListIsExist(domainName, clientIP, port);
+        if (result.isSuccess()) {
+            return orderService.pay(domainName, clientIP, port, params);
+        } else {
+            return result;
         }
     }
 
@@ -33,11 +36,11 @@ public class OrderProxyService implements IOrder {
      * @param port
      * @return
      */
-    private boolean whiteListIsExist(String domainName, String clientIP, int port) {
+    private Result whiteListIsExist(String domainName, String clientIP, int port) {
 
-        boolean isvalue = false;
+        Result result = null;
 
 
-        return isvalue;
+        return result;
     }
 }
