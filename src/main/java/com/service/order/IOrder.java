@@ -1,6 +1,8 @@
 package com.service.order;
 
 import com.alibaba.fastjson.JSONObject;
+import com.entity.Order;
+import com.entity.dto.OrderDTO;
 import com.utils.Result;
 
 public interface IOrder {
@@ -10,7 +12,7 @@ public interface IOrder {
      * @param domainName
      * @param clientIP
      * @param port
-     * @param params
+     * @param orderDTO
      */
-    Result pay(String domainName, String clientIP, int port, JSONObject params);
+    Result pay(String domainName, String clientIP, int port, OrderDTO orderDTO);
 }

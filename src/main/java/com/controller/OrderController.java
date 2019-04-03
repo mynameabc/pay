@@ -1,6 +1,8 @@
 package com.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.entity.Order;
+import com.entity.dto.OrderDTO;
 import com.service.order.IOrder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -20,22 +22,19 @@ import javax.servlet.http.HttpServletRequest;
 public class OrderController {
 
     @Autowired
-    @Qualifier("orderProxyService")
-    private IOrder orderProxyService;
+    @Qualifier("orderClientIPWhiteProxyService")
+    private IOrder orderClientIPWhiteProxyService;
 
     @ApiOperation(value="提交订单", notes="给下游方调用的订单接口")
-    @ApiImplicitParams({
-            @ApiImplicitParam(paramType="body", dataType="Model", name="params", value = "信息参数", required = true)
-    })
     @PostMapping(value="/pay", produces=MediaType.APPLICATION_JSON_UTF8_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-    public String downStreamPay(@RequestBody String params, HttpServletRequest request) {
+    public String downStreamPay(@RequestBody OrderDTO orderDTO, HttpServletRequest request) {
 
         int port = request.getRemotePort();             //端口号
         String clientIP = getIpAddress(request);        //真实IP地址
         String domainName = request.getServerName();    //域名
 
         try {
-            orderProxyService.pay(domainName, clientIP, port, JSONObject.parseObject(params));
+            orderClientIPWhiteProxyService.pay(domainName, clientIP, port, orderDTO);
         } catch (Exception e) {
             e.printStackTrace();
         }

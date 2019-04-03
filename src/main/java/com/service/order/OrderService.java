@@ -1,6 +1,8 @@
 package com.service.order;
 
 import com.alibaba.fastjson.JSONObject;
+import com.entity.Order;
+import com.entity.dto.OrderDTO;
 import com.utils.Result;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +14,16 @@ class OrderService implements IOrder {
      * @param domainName
      * @param clientIP
      * @param port
-     * @param params
+     * @param orderDTO
      */
-    public Result pay(String domainName, String clientIP, int port, JSONObject params) {
+    public Result pay(String domainName, String clientIP, int port, OrderDTO orderDTO) {
 
-        String mchId = params.getString("mchId");
+        long mchId = orderDTO.getMchID();
         this.validateMerchant(mchId, clientIP, port);
         return null;
     }
 
-    private void validateMerchant(String merchantID, String clientIP, int port) {
+    private void validateMerchant(long merchantID, String clientIP, int port) {
 
         //校验IP和端口号是否在白名单内
         {
