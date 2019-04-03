@@ -13,14 +13,11 @@
     <select id="getClientIPWhiteCount" resultType="int">
       select count(1) from clientip_white_list cwl
       <where>
-        <if test="clientIP != null">
-            cwl.clientIP = #{clientIP}
-        </if>
-        <if test="port > 0">
-            cwl.port = #{port}
+        <if test="clientIP != null and clientIP != ''">
+            cwl.ip = #{clientIP}
         </if>
         <if test="merchantID != null">
-          cwl.merchantID = #{merchantID}
+          and cwl.merchantID = #{merchantID}
         </if>
       </where>
     </select>
