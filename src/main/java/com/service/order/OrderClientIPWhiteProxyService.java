@@ -30,7 +30,7 @@ public class OrderClientIPWhiteProxyService implements IOrder {
     @Transactional
     public Result pay(String domainName, String clientIP, int port, OrderDTO orderDTO) {
 
-        Result result = whiteListIsExist(domainName, clientIP, port);
+        Result result = whiteListIsExist(domainName, clientIP, port, orderDTO);
         if (result.isSuccess()) {
             return orderService.pay(domainName, clientIP, port, orderDTO);
         } else {
@@ -45,14 +45,13 @@ public class OrderClientIPWhiteProxyService implements IOrder {
      * @param port
      * @return
      */
-    private Result whiteListIsExist(String domainName, String clientIP, int port) {
+    private Result whiteListIsExist(String domainName, String clientIP, int port, OrderDTO orderDTO) {
 
-        Result result = new Result(true, "SUCCESS");
+        int count = clientIPWhiteMapper.getClientIPWhiteCount(clientIP, port, orderDTO.getMchOrderID());
+        if (count >= 1) {
+            return new Result(true, "白名单匹配成功!");
+        }
 
-        ClientIPWhite clientIPWhite = new ClientIPWhite();
-        int count = clientIPWhiteMapper.selectCount(clientIPWhite);
-
-
-        return result;
+        return new Result(false, "白名单匹配失败!");
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.ClientIPWhiteMapper">
+
+    <resultMap id="BaseResultMap" type="com.entity.ClientIPWhite">
+        <id column="ID" jdbcType="BIGINT" property="ID"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip" />
+        <result column="port" jdbcType="INTEGER" property="port" />
+        <result column="merchantID" jdbcType="BIGINT" property="merchantID" />
+        <result column="CreateTime" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <select id="getClientIPWhiteCount" resultType="int">
+      select count(1) from clientip_white_list cwl
+      <where>
+        <if test="clientIP != null">
+            cwl.clientIP = #{clientIP}
+        </if>
+        <if test="port > 0">
+            cwl.port = #{port}
+        </if>
+        <if test="merchantID != null">
+          cwl.merchantID = #{merchantID}
+        </if>
+      </where>
+    </select>
+
+</mapper>
