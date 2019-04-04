@@ -15,7 +15,7 @@ import org.springframework.util.StringUtils;
 @Service("orderClientIPWhiteProxyService")
 public class OrderClientIPWhiteProxyService implements IOrder {
 
-    final static Logger _log = LogManager.getLogger(OrderClientIPWhiteProxyService.class);
+    final static Logger logger = LogManager.getLogger(OrderClientIPWhiteProxyService.class);
 
     @Autowired
     @Qualifier("orderService")
@@ -55,7 +55,7 @@ public class OrderClientIPWhiteProxyService implements IOrder {
         try {
             clientIPWhite = clientIPWhiteMapper.getClientIPWhite(clientIP, orderDTO.getMchID());
         } catch (Exception e) {
-            _log.error("Bad this:", e);
+            logger.error("Bad this:", e);
         }
 
         if (null != clientIPWhite) {
@@ -74,6 +74,10 @@ public class OrderClientIPWhiteProxyService implements IOrder {
             return new Result(false, "IP地址匹配失败, 发送请求的IP:" + clientIP);
         }
 
+        logger.info("info");
+        logger.warn("warn");
+        logger.debug("debug");
+        logger.error("error");
         return new Result(true, "白名单匹配成功!");
     }
 }
