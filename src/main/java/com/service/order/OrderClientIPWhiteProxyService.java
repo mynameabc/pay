@@ -4,13 +4,18 @@ import com.entity.ClientIPWhite;
 import com.entity.dto.OrderDTO;
 import com.mapper.ClientIPWhiteMapper;
 import com.utils.Result;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Service("orderClientIPWhiteProxyService")
 public class OrderClientIPWhiteProxyService implements IOrder {
+
+    final static Logger _log = LogManager.getLogger(OrderClientIPWhiteProxyService.class);
 
     @Autowired
     @Qualifier("orderService")
@@ -18,7 +23,6 @@ public class OrderClientIPWhiteProxyService implements IOrder {
 
     @Autowired
     private ClientIPWhiteMapper clientIPWhiteMapper;
-
 
     /**
      * 支付接口
@@ -28,9 +32,9 @@ public class OrderClientIPWhiteProxyService implements IOrder {
      * @param orderDTO
      */
     @Transactional
-    public Result pay(String domainName, String clientIP, int port, OrderDTO orderDTO) {
+    public Result pay(String domainName, String clientIP, String port, OrderDTO orderDTO) {
 
-        Result result = whiteListIsExist(domainName, clientIP, orderDTO);
+        Result result = whiteListIsExist(domainName, clientIP, port, orderDTO);
         if (result.isSuccess()) {
             return orderService.pay(domainName, clientIP, port, orderDTO);
         } else {
@@ -44,13 +48,32 @@ public class OrderClientIPWhiteProxyService implements IOrder {
      * @param clientIP
      * @return
      */
-    private Result whiteListIsExist(String domainName, String clientIP, OrderDTO orderDTO) {
+    private Result whiteListIsExist(String domainName, String clientIP, String port, OrderDTO orderDTO) {
 
-        int count = clientIPWhiteMapper.getClientIPWhiteCount(clientIP, orderDTO.getMchOrderID());
-        if (count >= 1) {
-            return new Result(true, "白名单匹配成功!");
+        ClientIPWhite clientIPWhite = null;
+
+        try {
+            clientIPWhite = clientIPWhiteMapper.getClientIPWhite(clientIP, orderDTO.getMchID());
+        } catch (Exception e) {
+            _log.error("Bad this:", e);
         }
 
-        return new Result(false, "白名单匹配失败!");
+        if (null != clientIPWhite) {
+
+            //如果表中的端口号不为空
+            if (!StringUtils.isEmpty(clientIPWhite.getPort())) {
+
+                //匹配端口号
+                if (!port.equals(clientIPWhite.getPort().trim())) {
+                    return new Result(false, "端口号匹配失败, 发送请求的端口号:" + port);
+                }
+            }
+
+        } else {
+
+            return new Result(false, "IP地址匹配失败, 发送请求的IP:" + clientIP);
+        }
+
+        return new Result(true, "白名单匹配成功!");
     }
 }

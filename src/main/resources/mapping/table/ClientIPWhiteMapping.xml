@@ -5,13 +5,17 @@
     <resultMap id="BaseResultMap" type="com.entity.ClientIPWhite">
         <id column="ID" jdbcType="BIGINT" property="ID"/>
         <result column="ip" jdbcType="VARCHAR" property="ip" />
-        <result column="port" jdbcType="INTEGER" property="port" />
+        <result column="port" jdbcType="VARCHAR" property="port" />
         <result column="merchantID" jdbcType="BIGINT" property="merchantID" />
         <result column="CreateTime" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
 
-    <select id="getClientIPWhiteCount" resultType="int">
-      select count(1) from clientip_white_list cwl
+    <sql id="Base_Column_List">
+      ID, ip, port, merchantID, createTime
+    </sql>
+
+    <select id="getClientIPWhite" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/> from clientip_white_list cwl
       <where>
         <if test="clientIP != null and clientIP != ''">
             cwl.ip = #{clientIP}

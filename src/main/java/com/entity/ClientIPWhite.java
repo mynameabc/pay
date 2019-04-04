@@ -17,7 +17,7 @@ public class ClientIPWhite implements java.io.Serializable {
     private String ip;
 
     @Column(name = "port")
-    private int port;
+    private String port;
 
     @Column(name = "merchantID")
     private Long merchantID;
@@ -43,11 +43,11 @@ public class ClientIPWhite implements java.io.Serializable {
         this.ip = ip;
     }
 
-    public int getPort() {
+    public String getPort() {
         return port;
     }
 
-    public void setPort(int port) {
+    public void setPort(String port) {
         this.port = port;
     }
 

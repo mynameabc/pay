@@ -16,14 +16,15 @@ class OrderService implements IOrder {
      * @param port
      * @param orderDTO
      */
-    public Result pay(String domainName, String clientIP, int port, OrderDTO orderDTO) {
+    public Result pay(String domainName, String clientIP, String port, OrderDTO orderDTO) {
 
         long mchId = orderDTO.getMchID();
         this.validateMerchant(mchId, clientIP, port);
-        return null;
+
+        return new Result(true, "执行成功!");
     }
 
-    private void validateMerchant(long merchantID, String clientIP, int port) {
+    private void validateMerchant(long merchantID, String clientIP, String port) {
 
         //校验IP和端口号是否在白名单内
         {

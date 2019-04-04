@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.entity.Order;
 import com.entity.dto.OrderDTO;
 import com.service.order.IOrder;
+import com.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -27,19 +28,21 @@ public class OrderController {
 
     @ApiOperation(value="提交订单", notes="给下游方调用的订单接口")
     @PostMapping(value="/pay", produces=MediaType.APPLICATION_JSON_UTF8_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-    public String downStreamPay(@RequestBody OrderDTO orderDTO, HttpServletRequest request) {
+    public Result downStreamPay(@RequestBody OrderDTO orderDTO, HttpServletRequest request) {
 
         int port = request.getRemotePort();             //端口号
         String clientIP = getIpAddress(request);        //真实IP地址
         String domainName = request.getServerName();    //域名
 
+        Result result = null;
+
         try {
-            orderClientIPWhiteProxyService.pay(domainName, clientIP, port, orderDTO);
+            result = orderClientIPWhiteProxyService.pay(domainName, clientIP, String.valueOf(port), orderDTO);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return "支付接口";
+        return result;
     }
 
     @ApiOperation(value="支付回调地址", notes="给上游方调用的回调地址")

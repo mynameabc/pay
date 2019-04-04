@@ -14,5 +14,5 @@ public interface IOrder {
      * @param port
      * @param orderDTO
      */
-    Result pay(String domainName, String clientIP, int port, OrderDTO orderDTO);
+    Result pay(String domainName, String clientIP, String port, OrderDTO orderDTO);
 }
