@@ -3,6 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript">
+
+        var websocket = null;
+        var username = "";
+
+        if ('Websocket' in window) {
+            websocket = new WebSocket("ws://" + document.location.host + "/websockt/" + username);
+        } else {
+            alert("该浏览器不支持websocket!");
+        }
+
+        websocket.onopen(function () {
+
+        })
+
+        websocket.onmessage(function () {
+
+        })
+
+        websocket.onerror(function () {
+
+        })
+
+    </script>
 </head>
 <body>
 

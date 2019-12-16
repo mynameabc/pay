@@ -1,13 +1,17 @@
 package com.service.order;
 
-import com.alibaba.fastjson.JSONObject;
-import com.entity.Order;
+import com.entity.Merchant;
 import com.entity.dto.OrderDTO;
+import com.mapper.MerchantMapper;
 import com.utils.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("orderService")
 class OrderService implements IOrder {
+
+    @Autowired
+    private MerchantMapper merchantMapper;
 
     /**
      * 支付接口
@@ -19,20 +23,30 @@ class OrderService implements IOrder {
     public Result pay(String domainName, String clientIP, String port, OrderDTO orderDTO) {
 
         long mchId = orderDTO.getMchID();
-        this.validateMerchant(mchId, clientIP, port);
+        Result result = this.validateMerchant(mchId, clientIP, port);
+        if (!result.isSuccess()) {
+            return result;
+        }
 
-        return new Result(true, "执行成功!");
-    }
-
-    private void validateMerchant(long merchantID, String clientIP, String port) {
-
-        //校验IP和端口号是否在白名单内
         {
 
         }
 
+        return result;
+    }
+
+    private Result validateMerchant(long merchantID, String clientIP, String port) {
+
         //查看商户
         {
+
+            //商户是否存在
+            {
+                Merchant merchant = merchantMapper.selectByPrimaryKey(merchantID);
+                if (null == merchant) {
+                    return new Result(true, "", null);
+                }
+            }
 
             //商户产品
             {
@@ -59,16 +73,13 @@ class OrderService implements IOrder {
 
                 }
 
-                //商户所提交金额是否符合商户自己的规则
-                {
-
-                }
-
                 //商户所提交金额是否符合其提交的通道实例规则
                 {
 
                 }
             }
         }
+
+        return new Result(true, "", null);
     }
 }
