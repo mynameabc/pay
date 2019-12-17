@@ -1,5 +1,6 @@
 package com.controller.websocket;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 
 import javax.websocket.*;
@@ -42,6 +43,13 @@ public class WebSocket_01 {
 
         String to = ""; //TODO 需要具体解析的JSON
         String toMessage = "";
+
+        //客户端消息转为JSON对象
+        JSONObject jsonObject = JSONObject.parseObject(message);
+
+        if (jsonObject.getString("id").equals("01")) {
+
+        }
 
         WebSocket_01 webSocket_01 = allClients.get(0);
         if (null != webSocket_01) {
