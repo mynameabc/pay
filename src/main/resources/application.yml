@@ -1,6 +1,10 @@
 server:
-  tomcat:
-    uri-encoding: UTF-8
+  undertow:
+    io-threads: 4
+    worker-threads: 128
+    buffer-size: 1024
+    direct-buffers: true
+#    buffers-per-region: 1024
   servlet:
     context-path: /api
   port: 5788
@@ -18,30 +22,30 @@ spring:
       max-active: 10
       min-evictable-idle-time-millis: 100000
       validation-query: select 1
-  redis:
-    database: 0
-    host: @redis.ip@
-    port: 6379
-    password: @redis.password@
-    jedis:
-      pool:
-        max-wait: -1ms
-        max-active: 8
-        max-idle: 8
-        min-idle: 0
-  rabbitmq:
-    host: @rabbitmq.ip@
-    port: 5672
-    username: @rabbitmq.username@
-    password: @rabbitmq.password@
-    virtual-host: /
-    publisher-confirms: true    # 开启发送确认
-    publisher-returns:  true    # 开启发送失败退回
-    listener:
-      direct:
-        acknowledge-mode: manual
-      simple:
-        acknowledge-mode: manual
+#  redis:
+#    database: 0
+#    host: @redis.ip@
+#    port: 6379
+#    password: @redis.password@
+#    jedis:
+#      pool:
+#        max-wait: -1ms
+#        max-active: 8
+#        max-idle: 8
+#        min-idle: 0
+#  rabbitmq:
+#    host: @rabbitmq.ip@
+#    port: 5672
+#    username: @rabbitmq.username@
+#    password: @rabbitmq.password@
+#    virtual-host: /
+#    publisher-confirms: true    # 开启发送确认
+#    publisher-returns:  true    # 开启发送失败退回
+#    listener:
+#      direct:
+#        acknowledge-mode: manual
+#      simple:
+#        acknowledge-mode: manual
   http:
     encoding:
       force: true

@@ -3,26 +3,28 @@
 <mapper namespace="com.mapper.ClientIPWhiteMapper">
 
     <resultMap id="BaseResultMap" type="com.entity.ClientIPWhite">
-        <id column="ID" jdbcType="BIGINT" property="ID"/>
-        <result column="ip" jdbcType="VARCHAR" property="ip" />
-        <result column="port" jdbcType="VARCHAR" property="port" />
-        <result column="merchantID" jdbcType="BIGINT" property="merchantID" />
-        <result column="CreateTime" jdbcType="TIMESTAMP" property="createTime"/>
+        <id column="id" jdbcType="BIGINT" property="ID"/>
+        <result column="ip_addr" jdbcType="VARCHAR" property="ipAddr" />
+        <result column="merchant_no" jdbcType="BIGINT" property="merchantNo" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-      ID, ip, port, merchantID, createTime
+      id, ip_addr, merchant_no, status, `type`, create_time, update_time
     </sql>
 
     <select id="getClientIPWhite" resultMap="BaseResultMap">
-      select <include refid="Base_Column_List"/> from clientip_white_list cwl
+      select <include refid="Base_Column_List"/> from client_ip_white ciw
       <where>
-        <if test="clientIP != null and clientIP != ''">
-            cwl.ip = #{clientIP}
+        <if test="ipAddr != null and ipAddr != ''">
+            ciw.ip_addr = #{ipAddr}
         </if>
-        <if test="merchantID != null">
-          and cwl.merchantID = #{merchantID}
-        </if>
+          <if test="type != null and type != ''">
+              ciw.type = #{type}
+          </if>
       </where>
     </select>
 

@@ -14,12 +14,12 @@ import java.util.Map;
  */
 @Data
 @ServerEndpoint("/websocket/{name}")
-public class WebSocket_01 {
+public class WebSocket {
 
     private String name;        //用于记录当前websocket是谁
     private Session session;    //链接, 用于记录当前链接
 
-    private static Map<String, WebSocket_01> allClients = new HashMap<>();
+    private static Map<String, WebSocket> allClients = new HashMap<>();
 
     /**
      * 当建立链接的时候调用此方法
@@ -51,10 +51,10 @@ public class WebSocket_01 {
 
         }
 
-        WebSocket_01 webSocket_01 = allClients.get(0);
-        if (null != webSocket_01) {
+        WebSocket webSocket = allClients.get(0);
+        if (null != webSocket) {
 
-            Session toSession = webSocket_01.getSession();
+            Session toSession = webSocket.getSession();
             if (toSession.isOpen()) {
                 toSession.getAsyncRemote().sendText(toMessage);
             }

@@ -61,13 +61,13 @@ public class OrderClientIPWhiteProxyService implements IOrder {
         if (null != clientIPWhite) {
 
             //如果表中的端口号不为空
-            if (!StringUtils.isEmpty(clientIPWhite.getPort())) {
+/*            if (!StringUtils.isEmpty(clientIPWhite.getPort())) {
 
                 //匹配端口号
                 if (!port.equals(clientIPWhite.getPort().trim())) {
                     return new Result(false, "端口号匹配失败, 发送请求的端口号:" + port);
                 }
-            }
+            }*/
 
         } else {
 

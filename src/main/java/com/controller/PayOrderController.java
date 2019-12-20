@@ -28,9 +28,9 @@ public class PayOrderController {
     @Qualifier("orderClientIPWhiteProxyService")
     private IOrder orderClientIPWhiteProxyService;
 
-    @ApiOperation(value="提交订单", notes="给下游方调用的订单接口")
-    @PostMapping(value="/pay", produces=MediaType.APPLICATION_JSON_UTF8_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-    public Result downStreamPay(@RequestParam String params, HttpServletRequest request) {
+    @ApiOperation(value="统一下单接口", notes="统一下单接口")
+    @RequestMapping(value="/pay", produces=MediaType.APPLICATION_JSON_UTF8_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
+    public Result pay(@RequestParam String params, HttpServletRequest request) {
 
         String logPrefix = "【商户统一下单接口】";
         _log.info("{}请求参数:{}", logPrefix, params);
@@ -41,11 +41,16 @@ public class PayOrderController {
 
         Result result = null;
 
-        //验证IP或域名, 考虑用redis
-
+        //验证IP
         //验证参数
         JSONObject po = JSONObject.parseObject(params);
-/*        result = this.validateParams(po);
+        JSONObject object = JSONObject.parseObject(this.validateParams(po).toString());
+
+        //验证商户号是否存在
+        //验证商户账户是否有钱
+        //验证商户是否有可用通道
+
+/*
         if (!result.isSuccess()) {
             _log.info("{}参数校验不通过:{}", logPrefix, object);
             return XXPayUtil.makeRetFail(XXPayUtil.makeRetMap(PayConstant.RETURN_VALUE_FAIL, object.toString(), null, PayEnum.ERR_0014.getCode(), object.toString()));
@@ -65,6 +70,14 @@ public class PayOrderController {
         //根据结果返回相关信息
 
         return result;
+    }
+
+    /**
+     * 验证
+     * @return
+     */
+    private Object validate() {
+        return null;
     }
 
     /**
