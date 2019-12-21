@@ -4,11 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.entity.dto.OrderDTO;
 import com.service.order.IOrder;
 import com.utils.Result;
+import com.utils.SignUtil;
 import com.utils.log.MyLog;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -16,7 +18,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
+@Slf4j
 @Api(tags="订单支付")
 @RestController
 @EnableAutoConfiguration

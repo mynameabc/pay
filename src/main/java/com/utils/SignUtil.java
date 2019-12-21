@@ -149,10 +149,11 @@ public class SignUtil {
         Map<String, String> map = new HashMap<>();
         map.put("merchantNo", "test");
         map.put("outTradeNo", "123162747");
-        String sign = SignUtil.sign(map, "UCYAWXVPV7FV4HU7");
+        String sign = SignUtil.sign(map, "UCYAWXVPV7FV4HU7");   //加签
         map.put("sign", sign);
         System.out.println("sign=" + sign);
 
+        //验签
         boolean verify = SignUtil.verifySign(map, "UCYAWXVPV7FV4HU7");
         System.out.println("verify=" + verify);
     }
