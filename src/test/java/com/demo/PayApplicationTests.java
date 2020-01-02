@@ -11,6 +11,8 @@ public class PayApplicationTests {
 
     @Test
     public void contextLoads() {
+
+        System.out.println(1);
     }
 
 }
