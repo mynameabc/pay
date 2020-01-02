@@ -24,8 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 @EnableAutoConfiguration
 public class PayOrderController {
 
-    private final MyLog _log = MyLog.getLog(PayOrderController.class);
-
     @Autowired
     @Qualifier("orderClientIPWhiteProxyService")
     private IOrder orderClientIPWhiteProxyService;
@@ -35,7 +33,7 @@ public class PayOrderController {
     public Result pay(@RequestParam String params, HttpServletRequest request) {
 
         String logPrefix = "【商户统一下单接口】";
-        _log.info("{}请求参数:{}", logPrefix, params);
+        log.info("{}请求参数:{}", logPrefix, params);
 
         int port = request.getRemotePort();             //端口号
         String clientIP = getIpAddress(request);        //真实IP地址
