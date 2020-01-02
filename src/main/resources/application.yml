@@ -4,13 +4,15 @@ server:
     worker-threads: 128
     buffer-size: 1024
     direct-buffers: true
-#    buffers-per-region: 1024
   servlet:
     context-path: /api
   port: 5788
 spring:
-  profiles:
-    active: dev
+  http:
+    encoding:
+      force: true
+      enabled: true
+      charset: UTF-8
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -22,17 +24,17 @@ spring:
       max-active: 10
       min-evictable-idle-time-millis: 100000
       validation-query: select 1
-#  redis:
-#    database: 0
-#    host: @redis.ip@
-#    port: 6379
-#    password: @redis.password@
-#    jedis:
-#      pool:
-#        max-wait: -1ms
-#        max-active: 8
-#        max-idle: 8
-#        min-idle: 0
+  redis:
+    database: 0
+    host: @redis.ip@
+    port: 6379
+    password: @redis.password@
+    lettuce:
+      pool:
+        max-active: @redis.max-active@
+        max-idle: @redis.max-idle@
+        min-idle: @redis.min-idle@
+        max-wait: @redis.max-wait@
 #  rabbitmq:
 #    host: @rabbitmq.ip@
 #    port: 5672
@@ -46,11 +48,6 @@ spring:
 #        acknowledge-mode: manual
 #      simple:
 #        acknowledge-mode: manual
-  http:
-    encoding:
-      force: true
-      charset: UTF-8
-      enabled: true
 
 #MyBatis配置
 mybatis:
