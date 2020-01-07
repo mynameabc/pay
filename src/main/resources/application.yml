@@ -54,6 +54,5 @@ mapper:
 #日志
 logging:
   file: ./log/pay.log
-  level:
-    org.xxpay.service.dao.mapper: debug
+  config: classpath:log4j2.xml
 

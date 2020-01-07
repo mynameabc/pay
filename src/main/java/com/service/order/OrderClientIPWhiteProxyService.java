@@ -4,18 +4,16 @@ import com.entity.ClientIPWhite;
 import com.entity.dto.OrderDTO;
 import com.mapper.ClientIPWhiteMapper;
 import com.utils.Result;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
+@Slf4j
 @Service("orderClientIPWhiteProxyService")
 public class OrderClientIPWhiteProxyService implements IOrder {
 
-    final static Logger logger = LogManager.getLogger(OrderClientIPWhiteProxyService.class);
 
     @Autowired
     @Qualifier("orderService")
@@ -55,7 +53,7 @@ public class OrderClientIPWhiteProxyService implements IOrder {
         try {
             clientIPWhite = clientIPWhiteMapper.getClientIPWhite(clientIP, orderDTO.getMchID());
         } catch (Exception e) {
-            logger.error("Bad this:", e);
+            log.error("Bad this:", e);
         }
 
         if (null != clientIPWhite) {
@@ -74,10 +72,10 @@ public class OrderClientIPWhiteProxyService implements IOrder {
             return new Result(false, "IP地址匹配失败, 发送请求的IP:" + clientIP);
         }
 
-        logger.info("info");
-        logger.warn("warn");
-        logger.debug("debug");
-        logger.error("error");
+        log.info("info");
+        log.warn("warn");
+        log.debug("debug");
+        log.error("error");
         return new Result(true, "白名单匹配成功!");
     }
 }

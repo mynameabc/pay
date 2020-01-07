@@ -1,8 +1,6 @@
 package com.utils;
 
 import com.exception.MoneyException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.regex.Pattern;
@@ -11,8 +9,6 @@ import java.util.regex.Pattern;
  * 金额工具类
  */
 public class MoneyUtil {
-
-    private static Logger logger = LogManager.getLogger(MoneyUtil.class.getName());
 
     /**
      * 判断money是否可以被当做金钱被计算
