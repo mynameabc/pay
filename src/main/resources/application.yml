@@ -24,6 +24,19 @@ spring:
       max-active: 10
       min-evictable-idle-time-millis: 100000
       validation-query: select 1
+swagger:
+  enabled: true
+  title: "Spring Boot 测试使用 Swagger2 构建RESTful API"
+  contact:
+    name: "LinShaoJun"
+    email: "21654428@qq.com"
+    url: "https://www.yunlingfly.cn"
+  version: "1.0"
+  description: "API 描述"
+  base-package: "com.controller"
+  base-path: /**
+  license: "Apache License, Version 2.0"
+  license-url: "https://www.apache.org/licenses/LICENSE-2.0.html"
 #  rabbitmq:
 #    host: @rabbitmq.ip@
 #    port: 5672
