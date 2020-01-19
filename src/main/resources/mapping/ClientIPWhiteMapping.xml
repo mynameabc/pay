@@ -17,15 +17,15 @@
     </sql>
 
     <select id="getClientIPWhite" resultMap="BaseResultMap">
-      select <include refid="Base_Column_List"/> from client_ip_white ciw
-      <where>
-        <if test="ipAddr != null and ipAddr != ''">
-            ciw.ip_addr = #{ipAddr}
-        </if>
-          <if test="type != null and type != ''">
-              ciw.type = #{type}
-          </if>
-      </where>
+        select <include refid="Base_Column_List"/> from client_ip_white ciw
+        <where>
+            <if test="ipAddr != null and ipAddr != ''">
+                ciw.ip_addr = #{ipAddr}
+            </if>
+            <if test="type != null and type != ''">
+                ciw.type = #{type}
+            </if>
+        </where>
     </select>
 
 </mapper>
