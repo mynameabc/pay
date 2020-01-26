@@ -1,4 +1,4 @@
-package com.exception;
+package com.system.exception;
 
 public class MoneyException extends RuntimeException {
 

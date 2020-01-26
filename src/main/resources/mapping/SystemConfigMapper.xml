@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.SystemConfigMapper">
+  <resultMap id="BaseResultMap" type="com.pojo.entity.SystemConfig">
+    <id column="config_id" jdbcType="INTEGER" property="configId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    config_id, `name`, `value`, description, create_time
+  </sql>
+
+  <update id="propertiesOpenOrClose">
+    update system_config set `value` = #{value} where `name` = #{name}
+  </update>
+
+  <select id="getSystemConfigValue" resultType="string">
+    select `value` from system_config where `name` = #{name} limit 1
+  </select>
+
+</mapper>

@@ -1,7 +1,7 @@
 package com.service.order;
 
-import com.entity.ClientIPWhite;
-import com.entity.dto.OrderDTO;
+import com.pojo.entity.IPWhite;
+import com.pojo.dto.OrderDTO;
 import com.mapper.ClientIPWhiteMapper;
 import com.utils.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +48,7 @@ public class OrderClientIPWhiteProxyService implements IOrder {
      */
     private Result whiteListIsExist(String domainName, String clientIP, String port, OrderDTO orderDTO) {
 
-        ClientIPWhite clientIPWhite = null;
+        IPWhite clientIPWhite = null;
 
         try {
             clientIPWhite = clientIPWhiteMapper.getClientIPWhite(clientIP, orderDTO.getMchID());

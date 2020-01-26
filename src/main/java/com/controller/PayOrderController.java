@@ -1,11 +1,10 @@
 package com.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.entity.dto.OrderDTO;
+import com.auxiliary.constant.ProjectConstant;
+import com.service.SystemConfigService;
 import com.service.order.IOrder;
-import com.utils.Result;
-import com.utils.SignUtil;
-import com.utils.log.MyLog;
+import communal.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -25,26 +24,37 @@ import javax.servlet.http.HttpServletRequest;
 public class PayOrderController {
 
     @Autowired
-    @Qualifier("orderClientIPWhiteProxyService")
-    private IOrder orderClientIPWhiteProxyService;
+    private SystemConfigService systemConfigService;
 
-    @ApiOperation(value="统一下单接口", notes="统一下单接口")
-    @RequestMapping(value="/pay", produces=MediaType.APPLICATION_JSON_UTF8_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-    public Result pay(@RequestParam String params, HttpServletRequest request) {
+    @ApiOperation(value="下单接口", notes="下单接口")
+    @PostMapping(value="/pay")
+    public Result pay(HttpServletRequest request) {
 
-        String logPrefix = "【商户统一下单接口】";
-        log.info("{}请求参数:{}", logPrefix, params);
+        //判断下单开关
+        if (!systemConfigService.isBoolean(ProjectConstant.PAY_ORDER_STATUS)) {
+            log.warn("系统下单开关被关闭, 请和管理员联系!");
+            return new Result("0001", "系统下单开关被关闭, 请和管理员联系!");
+        }
 
-        int port = request.getRemotePort();             //端口号
-        String clientIP = getIpAddress(request);        //真实IP地址
-        String domainName = request.getServerName();    //域名
+        //验证IP
+        String payOrderIp = getIp(request);
+        log.warn(payOrderIp);
+
+        //验证参数
+
+        StringBuilder logInfo = new StringBuilder();
+        logInfo
+                .append("\n" + "IP:{}" + "\n")
+                .append("参数:{}");
+
+
+        log.info(logInfo.toString(),
+                payOrderIp);
+
+
 
         Result result = null;
 
-        //验证IP
-        //验证参数
-        JSONObject po = JSONObject.parseObject(params);
-        JSONObject object = JSONObject.parseObject(this.validateParams(po).toString());
 
         //验证商户号是否存在
         //验证商户账户是否有钱
@@ -59,13 +69,6 @@ public class PayOrderController {
         //创建订单
 
         //根据产品ID获取相关类实例
-
-        //执行pay方法
-        try {
-//            result = orderClientIPWhiteProxyService.pay(domainName, clientIP, String.valueOf(port), orderDTO);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         //根据结果返回相关信息
 
@@ -202,7 +205,7 @@ public class PayOrderController {
      * @param request
      * @return
      */
-    private static String getIpAddress(HttpServletRequest request) {
+    private static String getIp(HttpServletRequest request) {
 
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {

@@ -1,8 +1,6 @@
 package com.service.order;
 
-import com.alibaba.fastjson.JSONObject;
-import com.entity.Order;
-import com.entity.dto.OrderDTO;
+import com.pojo.dto.OrderDTO;
 import com.utils.Result;
 
 public interface IOrder {

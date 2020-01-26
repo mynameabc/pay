@@ -1,5 +1,7 @@
 package com.controller;
 
+import com.system.Response;
+import com.system.ResponseCode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -15,10 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @ApiOperation(value="", notes="测试Swagger2")
-    @GetMapping(value = "/pay/test", produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String login() {
+    @GetMapping(value = "/pay/test")
+    public String test() {
+        return Response.get(ResponseCode.EXECUTE_SUCCESS).toString();
+    }
 
-        return "1";
+    @ApiOperation(value="", notes="测试Swagger2")
+    @GetMapping(value = "/pay/test1")
+    public Response test1() {
+        return Response.get(ResponseCode.EXECUTE_SUCCESS);
     }
 
 }

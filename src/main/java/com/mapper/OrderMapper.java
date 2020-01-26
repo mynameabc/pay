@@ -1,6 +1,6 @@
 package com.mapper;
 
 import com.MyMapper;
-import com.entity.Order;
+import com.pojo.entity.Order;
 
 public interface OrderMapper extends MyMapper<Order> {}

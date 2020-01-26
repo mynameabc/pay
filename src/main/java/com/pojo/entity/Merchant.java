@@ -1,4 +1,4 @@
-package com.entity;
+package com.pojo.entity;
 
 import javax.persistence.*;
 import java.util.Date;

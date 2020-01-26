@@ -1,4 +1,4 @@
-package com.entity;
+package com.pojo.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +8,8 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-@Table(name = "client_ip_white")
-public class ClientIPWhite implements java.io.Serializable {
+@Table(name = "ip_white")
+public class IPWhite implements java.io.Serializable {
 
     private static final long serialVersionUID = 6838410450574669112L;
 
@@ -19,7 +19,7 @@ public class ClientIPWhite implements java.io.Serializable {
     private Long ID;
 
     @Column(name = "merchant_no")
-    private long merchantNo;
+    private Integer merchantNo;
 
     @Column(name = "ip_addr")
     private String IpAddr;

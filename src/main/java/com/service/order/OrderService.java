@@ -1,7 +1,7 @@
 package com.service.order;
 
-import com.entity.Merchant;
-import com.entity.dto.OrderDTO;
+import com.pojo.entity.Merchant;
+import com.pojo.dto.OrderDTO;
 import com.mapper.MerchantMapper;
 import com.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
